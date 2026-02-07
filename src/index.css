@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+@theme {
+  --font-vt323: "VT323", monospace;
+  --font-press-start: "Press Start 2P", cursive;
+  --font-creepster: "Creepster", cursive;
+  --font-marker: "Permanent Marker", cursive;
+
+  --color-phosphor: #33ff33;
+  --color-amber: #ffb000;
+  --color-critical: #cc0000;
+
+  --color-upside-down-bg: #0a0208;
+  --color-upside-down-accent: #2a0a0f;
+  --color-mind-flayer: #1a0a1f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'VT323', monospace;
+  color: var(--color-phosphor);
+
+  /* Stranger Things Red-to-Black Horror Gradient */
+  background:
+    /* Subtle noise/grain texture */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E"),
+    /* Dramatic red to black radial gradient */
+    radial-gradient(ellipse at center, #1a0000 0%, #0d0000 40%, #000000 100%);
+  background-size: 200px 200px, 100% 100%;
+  background-position: 0 0, center center;
+
+  /* Intense vignette for horror atmosphere */
+  box-shadow: inset 0 0 400px rgba(0, 0, 0, 0.8), inset 0 0 150px rgba(139, 0, 0, 0.3);
+
+  transition: filter 2s ease, background 2s ease;
+}
+
+/* CRT Overlay Effect on BODY */
+body::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 999;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+body::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 999;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+/* POSSESSION MODE */
+.possessed {
+  background-color: #0a0208;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(40, 0, 0, 0.2), transparent 70%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, #000 3px);
+  filter: contrast(1.2) brightness(0.8) hue-rotate(-10deg);
+}
+
+.possessed body::after {
+  opacity: 1;
+  /* Heavy flicker */
+}
+
+/* Animation Keyframes */
+@keyframes flicker {
+  0% {
+    opacity: 0.02;
+  }
+
+  5% {
+    opacity: 0.05;
+  }
+
+  10% {
+    opacity: 0.02;
+  }
+
+  15% {
+    opacity: 0.06;
+  }
+
+  25% {
+    opacity: 0.02;
+  }
+
+  50% {
+    opacity: 0.02;
+  }
+
+  55% {
+    opacity: 0.05;
+  }
+
+  60% {
+    opacity: 0.02;
+  }
+
+  65% {
+    opacity: 0.04;
+  }
+
+  100% {
+    opacity: 0.02;
+  }
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes morse-blink-short {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    filter: brightness(0.5);
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    filter: brightness(2) drop-shadow(0 0 10px currentColor);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes morse-blink-long {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    filter: brightness(0.5);
+    transform: scale(1);
+  }
+
+  20%,
+  80% {
+    opacity: 1;
+    filter: brightness(2) drop-shadow(0 0 15px currentColor);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes demogorgon-appear {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes blood-drip {
+  0% {
+    height: 0;
+    opacity: 0.8;
+  }
+
+  100% {
+    height: 100vh;
+    opacity: 1;
+  }
+}
+
+.blood-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  /* Start hidden */
+  background: linear-gradient(to bottom, #8a0303 0%, rgba(138, 3, 3, 0.8) 50%, rgba(138, 3, 3, 0) 100%);
+  z-index: 50;
+  pointer-events: none;
+  animation: blood-drip 10s ease-in forwards;
+  mix-blend-mode: multiply;
+  filter: blur(1px);
+}
+
+.blood-drops {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.blood-drop {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  background: #8a0303;
+  animation: drop 3s infinite ease-in;
+  border-radius: 0 0 50% 50%;
+}
+
+@keyframes drop {
+  0% {
+    height: 0;
+    top: 0;
+    opacity: 0.8;
+  }
+
+  100% {
+    height: 80vh;
+    top: 20%;
+    opacity: 0;
+  }
+}
+
+/* POSSESSION MODE - Pitch Black Minimalistic */
+.possessed {
+  background-color: #000 !important;
+  background-image: none !important;
+  filter: contrast(1.5) brightness(0.8);
+}
+
+.possessed body::after {
+  opacity: 0.05;
+  /* Subtle noise */
+}
+
+/* Hide normal UI when possessed if needed, or overlay covers it */
+.possessed .normal-ui {
+  display: none;
+}
+
+@keyframes vine-grow {
+  from {
+    stroke-dashoffset: 1000;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes float-spore {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(calc(var(--drift-x) * 100px), calc(var(--drift-y) * -200px));
+    opacity: 0;
+  }
+}
